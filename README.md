@@ -22,12 +22,12 @@ The following architecture diagrams depict the solutions we are going to build i
 ## Amazon Cognito user pool as IdP
 The first architectural diagram shows the interaction between SMART on FHIR application, Amazon Cognito user pool as IdP, AWS SMART on FHIR enabled HealthLake, and an AWS Lambda function to validate access tokens and extract relevant FHIR claims.
 
-https://static.us-east-1.prod.workshops.aws/public/a32ab9e1-bec2-46ff-bf8e-ecc29f6a363e/static/architecture_cognito.png<img width="2451" height="1177" alt="image" src="https://github.com/user-attachments/assets/55c2cb52-72d5-4249-9b20-43104125a3fc" />
+<img width="2451" height="1177" alt="image" src="https://github.com/user-attachments/assets/55c2cb52-72d5-4249-9b20-43104125a3fc" />
 
 ## Keycloak as IdP
 The second architectural diagram shows the interaction between SMART on FHIR application, Keycloak as IdP hosted by AWS App Runner, AWS SMART on FHIR enabled HealthLake, and an AWS Lambda function to validate access tokens and extract relevant FHIR claims.
 
-https://static.us-east-1.prod.workshops.aws/public/a32ab9e1-bec2-46ff-bf8e-ecc29f6a363e/static/architecture_keycloak.png<img width="1888" height="824" alt="image" src="https://github.com/user-attachments/assets/7411b60f-bd02-4028-be8e-1f4ef58f7956" />
+<img width="1888" height="824" alt="image" src="https://github.com/user-attachments/assets/7411b60f-bd02-4028-be8e-1f4ef58f7956" />
 
 
 
