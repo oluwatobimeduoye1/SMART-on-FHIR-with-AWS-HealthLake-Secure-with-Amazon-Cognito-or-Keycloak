@@ -49,22 +49,80 @@ Then, we will test the solution with Postman to make FHIR REST API requests and 
 
 ## Create a user pool
 We will first create an Amazon Cognito user pool.
+- Configure your user pool app client with allowed callback URLs, logout URLs, and the scopes that you want to request, for example openid and profile
+- Create user pool resource servers
+  <img width="1470" height="768" alt="Screenshot 2025-09-17 at 17 50 49" src="https://github.com/user-attachments/assets/53bedced-6c90-4189-8034-774064acf19e" />
+- Configure the app client
+- UpdatE a user pool app client
+  At the AWS CLI, enter the following command:
+''
+  aws cognito-idp update-user-pool-client --user-pool-id  "MyUserPoolID" --client-id "MyAppClientID" --allowed-o-auth-flows-user-pool-client --allowed-o-auth-flows "code" "implicit" --allowed-o-auth-scopes "openid" --callback-urls "["https://example.com"]" --supported-identity-providers "["MySAMLIdP", "LoginWithAmazon"]"
+''
+- Create a test user
+<img width="1468" height="745" alt="Screenshot 2025-09-17 at 17 52 41" src="https://github.com/user-attachments/assets/e398d74d-4db1-442b-af57-d40df2a6f52c" />
 
+## Get federation endpoints
+Construct the user pool's metadata URL using the following format: https://cognito-idp.<REGION>.amazonaws.com/<USER_POOL_ID>/.well-known/openid-configuration.
 
+<img width="1470" height="232" alt="Screenshot 2025-09-17 at 19 07 12" src="https://github.com/user-attachments/assets/4369f86f-ff3e-4b5e-bed2-056cd7c674fa" />
 
+## Create a HealthLake service role
+- Create role.
+- On the Select trust entity page, choose Custom trust policy.
+- Under Custom trust policy update the sample policy as follows.
+  "
+   {
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "sts:AssumeRole",
+      "Principal": {
+            "Service": "healthlake.amazonaws.com"
+        }
+    }
+  ]
+  "
+- On the Add permissions page, search and select the AmazonHealthLakeFullAccess policy.
 
+## Create a token validation Lambda function
+When HealthLake receives a request to a SMART on FHIR enabled data store, it will trigger a Lambda function to validate the access token contained in the authorization header of the FHIR REST API call.
 
+Since Cognito user pool doesn’t have a token introspection endpoint to validate JWT tokens, we will use the PyJWT  library to validate the access token in the Lambda function and retrieve the claims.
 
+- Choose Create layer.
+- Under Layer configuration, for Name, enter a name for your layer.
+- To upload layer code, choose Upload a .zip file. Then, choose Upload to select your local jwt-python39.zip file.
+- For Compatible architectures, choose x86_64.
+- For Compatible runtimes, choose Python 3.9.
+- Choose Create
 
+##  create the Lambda function:
+- Open the Lambda console .
+- Choose Create function.
+- Choose Author from scratch.
+- Configure the following settings:
+- Function name: Enter a name for the function.
+- Runtime: Choose Python 3.9.
+- Architecture: Choose x86_64.
+- Choose Create function.
+- In Code source, paste following code in the lambda_function tab as the source code of your function
+   In the source code, replace following variable values:
+client_id: you noted down in the Configure the app client lab.
+client_secret: you noted down in the Configure the app client lab.
+jwks_uri: you noted down in the Get federation endpoints lab.
+user_role_arn: you noted down in the Create a HealthLake service role lab.
+user_pool_id: you noted down in the Create a user pool lab.
 
+- Click Deploy to save and deploy the function code.
+-  Add a layer.
+- choose Custom Layers.
+- For the Custom layers layer sources, choose the layer you just created from the pull-down menu. Under Version, choose the latest version from the pull-down menu.
+- Choose Add.
 
+## In the opened CloudShell terminal paste following AWS CLI command:
+'' aws lambda add-permission --function-name [lambda-name] --action lambda:InvokeFunction --statement-id healthlake --principal healthlake.amazonaws.com --output text''
 
-
-
-
-
-
-
-
+Replace [lambda-name] with the name of your Lambda function, and press enter to run the command.
 
 
