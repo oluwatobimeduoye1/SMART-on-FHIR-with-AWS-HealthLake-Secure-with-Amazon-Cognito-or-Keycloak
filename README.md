@@ -125,4 +125,5 @@ user_pool_id: you noted down in the Create a user pool lab.
 
 Replace [lambda-name] with the name of your Lambda function, and press enter to run the command.
 
+# Create a SMART-on-FHIR enabled data store
 
