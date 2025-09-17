@@ -30,6 +30,29 @@ The second architectural diagram shows the interaction between SMART on FHIR app
 <img width="1888" height="824" alt="image" src="https://github.com/user-attachments/assets/7411b60f-bd02-4028-be8e-1f4ef58f7956" />
 
 
+Both solutions use native AWS services following the Well-Architected Framework to ensure secure, reliable, efficient, and cost-optimized architecture.
+
+
+# Securing HealthLake with Cognito User Pool
+I will create an interaction between SMART on FHIR application, Amazon Cognito user pool as IdP, SMART on FHIR enabled AWS HealthLake, and an AWS Lambda function to validate access tokens and extract relevant FHIR claims. 
+
+### I will achieve this by provisioning the following components:
+
+- A Cognito user pool: This acts as a centralized user directory, managing user registration, authentication, and authorization.
+- User pool resource servers: These resource servers define custom authorization scopes for your FHIR REST API. These scopes will specify the specific data and actions users are allowed to access within the HealthLake data store.
+- A user pool app client: This component represents your FHIR application within Cognito and allows users to securely interact with the FHIR REST API.
+- A HealthLake service role: This IAM role has the necessary permissions to carry out the FHIR REST API request, and its ARN needs to be returned by the token validation Lambda function.
+- A token validation Lambda function: This Lambda function can decode the access token provided in the authorization header of the FHIR REST API request sent by the client application.
+- A SMART on FHIR enabled HealthLake data store: This data store leverages the SMART on FHIR framework for authorization with HealthLake.
+
+Then, we will test the solution with Postman to make FHIR REST API requests and retrieve patient records from the HealthLake data store by authenticating and authorizing with the Cognito user pool.
+
+## Create a user pool
+We will first create an Amazon Cognito user pool.
+
+
+
+
 
 
 
