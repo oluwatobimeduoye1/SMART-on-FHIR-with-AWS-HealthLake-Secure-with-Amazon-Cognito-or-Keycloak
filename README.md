@@ -126,4 +126,24 @@ user_pool_id: you noted down in the Create a user pool lab.
 Replace [lambda-name] with the name of your Lambda function, and press enter to run the command.
 
 # Create a SMART-on-FHIR enabled data store
+Copy below AWS CLI command
+,,
+aws healthlake create-fhir-datastore  \
+ --region [REGION] \
+ --datastore-name "[DATASTORE-NAME]" \
+ --preload-data-config PreloadDataType="SYNTHEA" \
+ --datastore-type-version R4 \
+ --sse-configuration KmsEncryptionConfig={CmkType="AWS_OWNED_KMS_KEY"} \
+ --identity-provider-configuration '{"AuthorizationStrategy": "SMART_ON_FHIR_V1", "FineGrainedAuthorizationEnabled": true, "Metadata": "{\"issuer\":\"https://cognito-idp.[REGION].amazonaws.com/[USER-POOL-ID]\",\"authorization_endpoint\":\"https://[USER-POOL-NAME].auth.[REGION].amazoncognito.com/oauth2/authorize\",\"token_endpoint\":\"https://[USER-POOL-NAME].auth.[REGION].amazoncognito.com/oauth2/token\",\"jwks_uri\":\"https://cognito-idp.[REGION].amazonaws.com/[USER-POOL-ID]/.well-known/jwks.json\",\"response_types_supported\":[\"code\",\"token\"],\"response_modes_supported\":[\"query\",\"fragment\",\"form_post\"],\"grant_types_supported\":[\"authorization_code\",\"implicit\",\"refresh_token\",\"password\",\"client_credentials\"],\"subject_types_supported\":[\"public\"],\"scopes_supported\":[\"openid\",\"profile\",\"email\",\"phone\"],\"token_endpoint_auth_methods_supported\":[\"client_secret_basic\",\"client_secret_post\"],\"claims_supported\":[\"ver\",\"jti\",\"iss\",\"aud\",\"iat\",\"exp\",\"cid\",\"uid\",\"scp\",\"sub\"],\"code_challenge_methods_supported\":[\"S256\"],\"revocation_endpoint\":\"https://[USER-POOL-NAME].auth.[REGION].amazoncognito.com/oauth2/revoke \",\"revocation_endpoint_auth_methods_supported\":[\"client_secret_basic\",\"client_secret_post\",\"client_secret_jwt\",\"private_key_jwt\",\"none\"],\"request_parameter_supported\":true,\"request_object_signing_alg_values_supported\":[\"HS256\",\"HS384\",\"HS512\",\"RS256\",\"RS384\",\"RS512\",\"ES256\",\"ES384\",\"ES512\"],\"capabilities\":[\"launch-ehr\",\"sso-openid-connect\",\"client-public\"]}", "IdpLambdaArn": "[LAMBDA-FUNCTION-ARN]"}'
+''
+Replace following values in the command:
+DATASTORE-NAME: 
+REGION: 
+USER-POOL-ID: 
+USER-POOL-NAME: 
+LAMBDA-FUNCTION-ARN:
 
+
+<img width="1463" height="788" alt="Screenshot 2025-09-23 at 07 01 37" src="https://github.com/user-attachments/assets/9e63025b-e076-46d3-9437-95fcb8e9bd5b" />
+
+<img width="1469" height="569" alt="Screenshot 2025-09-23 at 07 51 55" src="https://github.com/user-attachments/assets/b3589f46-ce38-4c98-b015-19362a2c5eb5" />
