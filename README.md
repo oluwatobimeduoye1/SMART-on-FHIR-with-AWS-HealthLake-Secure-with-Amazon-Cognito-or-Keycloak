@@ -66,6 +66,12 @@ Construct the user pool's metadata URL using the following format: https://cogni
 
 <img width="1470" height="232" alt="Screenshot 2025-09-17 at 19 07 12" src="https://github.com/user-attachments/assets/4369f86f-ff3e-4b5e-bed2-056cd7c674fa" />
 
+
+note down following endpoint URLs:
+authorization_endpoint
+jwks_url
+token_endpoint
+
 ## Create a HealthLake service role
 - Create role.
 - On the Select trust entity page, choose Custom trust policy.
