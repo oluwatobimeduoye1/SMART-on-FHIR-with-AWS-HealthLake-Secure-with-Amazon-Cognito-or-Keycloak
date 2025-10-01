@@ -68,9 +68,9 @@ Construct the user pool's metadata URL using the following format: https://cogni
 
 
 note down following endpoint URLs:
-authorization_endpoint
-jwks_url
-token_endpoint
+authorization_endpoint,
+jwks_url,
+token_endpoint.
 
 ## Create a HealthLake service role
 - Create role.
